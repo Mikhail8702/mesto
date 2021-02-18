@@ -1,0 +1,14 @@
+.container {
+  width: 68.75%;
+  margin: 0 auto;
+}
+@media all and (max-width: 490px) {
+  .container {
+    width: 88%;
+  }
+}
+@media all and (max-width: 310px) {
+  .container {
+    width: 100%;
+  }
+}

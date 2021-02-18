@@ -1,0 +1,21 @@
+.profile__add {
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../../images/Vector.png);
+  border: 1px solid #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 7px;
+}
+.profile__add:hover {
+  opacity: 0.6;
+}
+
+@media all and (max-width: 425px) {
+  .profile__add {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+}

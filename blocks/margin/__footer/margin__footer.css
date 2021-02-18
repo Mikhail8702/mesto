@@ -1,0 +1,9 @@
+.margin__footer {
+  margin: 66px 0 60px auto;
+}
+
+@media all and (max-width: 425px) {
+  .margin__footer {
+    margin: 48px 0 36px 0;
+  }
+}
