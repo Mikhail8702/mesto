@@ -18,7 +18,7 @@
 @import url(../blocks/profile/__add/profile__add.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__wrapper/profile__wrapper.css);
-@import url(../blocks/margin/__profile/margin__profile.css);
+@import url(../blocks/margin-profile/margin-profile.css);
 
 /*Elements*/
 @import url(../blocks/elements/elements.css);
@@ -31,7 +31,7 @@
 
 /*Footer*/
 @import url(../blocks/footer/footer.css);
-@import url(../blocks/margin/__footer/margin__footer.css);
+@import url(../blocks/margin-footer/margin-footer.css);
 @import url(../blocks/footer/__copirate/footer__copirate.css);
 
 /*Popup*/
