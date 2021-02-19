@@ -1,4 +1,6 @@
 .header {
+  display: flex;
+  align-items: start;
   width: 68.75%;
   margin: 0 auto;
   min-height: 74px;
