@@ -9,6 +9,7 @@
   line-height: 22px;
   border: 0;
   border-radius: 2px;
+  outline: none;
 }
 .popup__btn:hover {
   opacity: 0.8;

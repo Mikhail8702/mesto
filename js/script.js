@@ -8,7 +8,7 @@ let jobInput = document.querySelector('#second__input');//значение 2го
 let savePopup = document.querySelector('.popup__btn');//значение кнопик "сохранить"
 
 //Открытие/Закрытие popup-окна
-addButton.addEventListener('click', function () {
+addButton.addEventListener('click', function() {
   profileAdd.classList.add('popup_opened');
   });
 

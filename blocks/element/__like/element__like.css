@@ -1,6 +1,11 @@
 .element__like {
-  max-width: 22px;
-  max-height: 19px;
+  width: 22px;
+  height: 19px;
+  background-image: url(../../../images/like.svg);
+  background-repeat: no-repeat;
+  background-color: #fff;
+  border: none;
+  outline: none;
 }
 .element__like:hover {
   opacity: 0.5;
