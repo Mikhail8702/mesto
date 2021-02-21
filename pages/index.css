@@ -7,7 +7,6 @@
 /*Header*/
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/heaer__logo.css);
-@import url(../blocks/header/__link/header__link.css);
 
 /*Profile*/
 @import url(../blocks/profile/profile.css);
@@ -27,7 +26,6 @@
 @import url(../blocks/element/__title/element__title.css);
 @import url(../blocks/element/__info/element__info.css);
 @import url(../blocks/element/__like/element__like.css);
-@import url(../blocks/element/__like/_active/element__like_active.css);
 
 /*Footer*/
 @import url(../blocks/footer/footer.css);
@@ -42,3 +40,4 @@
 @import url(../blocks/popup/__btn/popup__btn.css);
 @import url(../blocks/popup/__close/popup__close.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__form/popup__form.css);

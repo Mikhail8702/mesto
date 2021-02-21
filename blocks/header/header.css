@@ -3,13 +3,13 @@
   align-items: start;
   width: 68.75%;
   margin: 0 auto;
-  min-height: 74px;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  padding-bottom: 41px;
 }
 
 @media all and (max-width: 767px) {
   .header {
     width: 100%;
-    min-height: 54px;
+    padding-bottom: 32px;
   }
 }

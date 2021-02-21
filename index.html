@@ -20,16 +20,16 @@
       <main>
         <section class="profile margin-profile">
           <div class="profile__info">
-            <img src="./images/avatar.png" alt="аватар" class="profile__avatar">
+            <img src="./images/avatar.jpg" alt="аватар" class="profile__avatar">
             <div>
               <div class="profile__wrapper">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
-                <button class="profile__add"></button>
+                <button type="button" class="profile__add"></button>
               </div>
               <p class="profile__discription">Исследователь океана</p>
             </div>
           </div>
-          <button class="profile__add-btn"></button>
+          <button type="button" class="profile__add-btn"></button>
         </section>
 
         <section class="elements">
@@ -84,7 +84,7 @@
       </main>
 
       <footer class="footer margin-footer">
-        <p class="footer__copirate">&copy;2020. Mesto Russia</p>
+        <p class="footer__copirate">&copy;2021. Mesto Russia</p>
       </footer>
     </div>
   </div>
@@ -92,10 +92,12 @@
   <div class="popup">
     <div class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <input type="text" class="popup__input" id="first__input" value="Жак-Ив Кусто">
-      <input type="text" class="popup__input" id="second__input" value="Исследователь океана">
-      <button class="popup__btn">Сохранить</button>
-      <div class="popup__close"></div>
+      <form class="popup__form" name="popup-form">
+        <input type="text" class="popup__input" name="input-name" id="input__popup-name" value="">
+        <input type="text" class="popup__input" name="input-job" id="input__popap-job" value="">
+        <button type="submit" class="popup__btn">Сохранить</button>
+      </form>
+      <button type="button" class="popup__close"></button>
     </div>
   </div>
   <script src="./js/script.js"></script>

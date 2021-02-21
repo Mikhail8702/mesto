@@ -2,13 +2,12 @@
   min-width: 150px;
   min-height: 50px;
   border: 1px solid #fff;
-  background:
-    linear-gradient(#fff,#fff),
-    linear-gradient(#fff,#fff);
-  background-position:center;
-  background-size: 22px 2px,2px 22px;
+  background-image: url(../../../images/addElement.svg);
   background-repeat:no-repeat;
+  background-color: unset;
+  background-position:center;
   outline: none;
+  border-radius: 2px;
 }
 .profile__add-btn:hover {
   opacity: 0.6;
@@ -18,5 +17,6 @@
   .profile__add-btn {
     width: 99%;
     margin: 36px auto 0 auto;
+    background-size: 16px 16px;
   }
 }

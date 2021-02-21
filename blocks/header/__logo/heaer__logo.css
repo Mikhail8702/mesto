@@ -6,7 +6,6 @@ max-height: 33px;
 @media all and (max-width: 767px) {
   .header__logo {
     margin-left: 27px;
-    margin-bottom: 31px;
   }
 }
 
