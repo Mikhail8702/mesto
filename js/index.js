@@ -59,21 +59,23 @@ const newCard = cardTemlate.querySelector('.element').cloneNode(true);
 newCard.querySelector('.element__title').textContent = element.name;
 newCard.querySelector('.element__image').src = element.link;
 newCard.querySelector('.element__image').alt = element.name;
-
+newCard.querySelector('.element__like').addEventListener('click', (e) => {
+  e.target.classList.toggle('element__like_active');
+});
 return newCard;
 }
+//рендер на страницу
+function addCardToDOM () {
+  const cardDOM = initialCards.map(addCard);
 
-function createCard () {
- const newCard = initialCards.map(addCard);
-
-  cardsContainer.prepend(...newCard);
+  cardsContainer.prepend(...cardDOM);
 }
-
 
 //Эта функция добавляет модификатор открытия попапов
 function openPopup (e) {
   e.classList.add('popup_opened');
 }
+
 //открывает попап профиля
 function openProfile() {
   nameInput.value = nameProf.textContent;
@@ -83,7 +85,7 @@ function openProfile() {
 
 //Функция закрытия попап
 function closePopup(e) {
-  e.classList.toggle('popup_opened');
+  e.classList.remove('popup_opened');
 }
 
 //редактирование профиля
@@ -96,37 +98,31 @@ function formSubmitHandler (evt) {
 
 //добавление новой карточки через попап
 function addNewCard () {
-  const newCard = cardTemlate.querySelector('.element').cloneNode(true);
+  const newCardDOM = cardTemlate.querySelector('.element').cloneNode(true);
 
-  newCard.querySelector('.element__title').textContent = inputCardAddName.value;
-  newCard.querySelector('.element__image').src = inputCardAddImg.value;
-  newCard.querySelector('.element__image').alt = inputCardAddName.value;
-  return newCard;
+  newCardDOM.querySelector('.element__title').textContent = inputCardAddName.value;
+  newCardDOM.querySelector('.element__image').src = inputCardAddImg.value;
+  newCardDOM.querySelector('.element__image').alt = inputCardAddName.value;
+  newCardDOM.querySelector('.element__like').addEventListener('click', (e) => {
+    e.target.classList.toggle('element__like_active');
+  });
+  return newCardDOM;
 }
-
-function createNewCard (evt) {
+//рендер на страницу новой карточки
+function addNewCardToDOM (evt) {
   evt.preventDefault();
-  const newCard = addNewCard();
-  cardsContainer.prepend(newCard);
+  const renderCard = addNewCard();
+  cardsContainer.prepend(renderCard);
+  deleteCard();
   closePopup(popupCard);
 }
-
-
-//лайки
-function addLike() {
-const like = document.querySelectorAll('.element__like');
-  like.forEach(function(e) {
-    e.addEventListener("click", function() {
-      e.classList.toggle('element__like_active');
-    });
-  });
-}
+addCardToDOM();
 
 //Удаление карточек
 function deleteCard () {
   const removeCard = document.querySelectorAll('.element__delete');
   removeCard.forEach(function(e) {
-    e.addEventListener('click', function() {
+    e.addEventListener('click', () => {
       e.closest('.element').remove();
     });
   });
@@ -136,7 +132,7 @@ function deleteCard () {
 function showBiggestImage () {
   const allImage = document.querySelectorAll('.element__image');
   allImage.forEach(function(e) {
-    e.addEventListener('click', function() {
+    e.addEventListener('click', () => {
       popupImage.src = e.src;
       popupFigcaption.textContent = e.alt;
       popupImage.alt = e.alt;
@@ -150,21 +146,19 @@ function closePopupBtn () {
   const closeBtn = document.querySelectorAll('.popup__close');
 
   closeBtn.forEach(function(e) {
-    e.addEventListener('click', function() {
+    e.addEventListener('click', () => {
       e.closest('.popup').classList.toggle('popup_opened');
     });
   });
 }
 
 //Вызовы функций слушателями
-openProfileButton.addEventListener('click', openProfile);// открытие попап профиля
+openProfileButton.addEventListener('click', () => openPopup(profileAdd));// открытие попап профиля
 formProfile.addEventListener('submit', formSubmitHandler);//кнопка закрытия формы
 addCardButton.addEventListener('click', () => openPopup(popupCard));// кнопка добавления карточки
-formCard.addEventListener('submit', createNewCard);
+formCard.addEventListener('submit', addNewCardToDOM);
 
 //вызовы функций
-createCard();
-addLike();
 deleteCard();
 showBiggestImage();
 closePopupBtn();
