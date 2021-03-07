@@ -59,11 +59,12 @@ const newCard = cardTemlate.querySelector('.element').cloneNode(true);
 newCard.querySelector('.element__title').textContent = element.name;
 newCard.querySelector('.element__image').src = element.link;
 newCard.querySelector('.element__image').alt = element.name;
-newCard.querySelector('.element__like').addEventListener('click', (e) => {
-  e.target.classList.toggle('element__like_active');
-});
+
+deleteCard(newCard);
+addLike(newCard);
 return newCard;
 }
+
 //рендер на страницу
 function addCardToDOM () {
   const cardDOM = initialCards.map(addCard);
@@ -103,28 +104,34 @@ function addNewCard () {
   newCardDOM.querySelector('.element__title').textContent = inputCardAddName.value;
   newCardDOM.querySelector('.element__image').src = inputCardAddImg.value;
   newCardDOM.querySelector('.element__image').alt = inputCardAddName.value;
-  newCardDOM.querySelector('.element__like').addEventListener('click', (e) => {
-    e.target.classList.toggle('element__like_active');
-  });
+
+  deleteCard(newCardDOM);
+  addLike(newCardDOM);
   return newCardDOM;
 }
+
 //рендер на страницу новой карточки
 function addNewCardToDOM (evt) {
   evt.preventDefault();
   const renderCard = addNewCard();
   cardsContainer.prepend(renderCard);
-  deleteCard();
   closePopup(popupCard);
 }
 addCardToDOM();
 
+//Лайки
+function addLike (e) {
+  const likeBtn = document.querySelector('.element__like');
+  e.addEventListener('click', (e) => {
+    e.target.classList.toggle('element__like_active');
+  });
+}
+
 //Удаление карточек
-function deleteCard () {
+function deleteCard (e) {
   const removeCard = document.querySelectorAll('.element__delete');
-  removeCard.forEach(function(e) {
-    e.addEventListener('click', () => {
-      e.closest('.element').remove();
-    });
+   e.addEventListener('click', (e) => {
+    e.target.closest('.element').remove();
   });
 }
 
@@ -153,12 +160,11 @@ function closePopupBtn () {
 }
 
 //Вызовы функций слушателями
-openProfileButton.addEventListener('click', () => openPopup(profileAdd));// открытие попап профиля
+openProfileButton.addEventListener('click', openProfile);// открытие попап профиля
 formProfile.addEventListener('submit', formSubmitHandler);//кнопка закрытия формы
 addCardButton.addEventListener('click', () => openPopup(popupCard));// кнопка добавления карточки
 formCard.addEventListener('submit', addNewCardToDOM);
 
 //вызовы функций
-deleteCard();
 showBiggestImage();
 closePopupBtn();
