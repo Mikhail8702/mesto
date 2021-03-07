@@ -47,3 +47,4 @@
 @import url(../blocks/popup/_opacity/popup_opacity.css);
 @import url(../blocks/popup/__figure/popup__figure.css);
 @import url(../blocks/popup/__figcaption/popup__figcaption.css);
+@import url(../blocks/popup/__content/popup__content.css);
