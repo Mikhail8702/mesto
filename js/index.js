@@ -25,55 +25,47 @@ const popupShowImage =document.querySelector('#popup-show-image');//попап �
 const popupImage = document.querySelector('.popup__image');//изображение в попапе
 const popupFigcaption = document.querySelector('.popup__figcaption');//подпись изображения в попапе
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
  //добаваляю карточки на страницу
-function addCard(element){
+function createCard(element){
   const newCard = cardTemlate.querySelector('.element').cloneNode(true);
+  const elementImage = newCard.querySelector('.element__image');
+  const elementTitle = newCard.querySelector('.element__title');
 
-  newCard.querySelector('.element__title').textContent = element.name;
-  newCard.querySelector('.element__image').src = element.link;
-  newCard.querySelector('.element__image').alt = element.name;
+  elementTitle.textContent = element.name;
+  elementImage.src = element.link;
+  elementImage.alt = element.name;
+
+  showBiggestImage(elementImage);
   addLike(newCard);
   deleteCard(newCard);
   return newCard;
 }
 
 //рендер на страницу
-function addCardToDOM () {
-  const cardDOM = initialCards.map(addCard);
+function renderInitialCards () {
+  const cards = initialCards.map(createCard);
 
-  cardsContainer.prepend(...cardDOM);
+
+  cardsContainer.prepend(...cards);
+}
+renderInitialCards();
+
+
+//рендер на страницу новой карточки
+function addCardFormSubmitHandler (evt) {
+  evt.preventDefault();
+  const card = createCard({name: inputCardAddName.value, link: inputCardAddImg.value});
+  cardsContainer.prepend(card);
+  closePopup(popupCard);
+  inputCardAddImg.value ='';
+  inputCardAddName.value ='';
 }
 
+
 //Эта функция добавляет модификатор открытия попапов
-function openPopup (e) {
-  e.classList.add('popup_opened');
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
 }
 
 //открывает попап профиля
@@ -84,81 +76,54 @@ function openProfile() {
 }
 
 //Функция закрытия попап
-function closePopup(e) {
-  e.classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 //редактирование профиля
-function formSubmitHandler (evt) {
+function editProfileFormSubmitHandler (evt) {
   evt.preventDefault();
   nameProf.textContent = nameInput.value;
   jobDiscr.textContent = jobInput.value;
   closePopup(profileAdd);
 }
 
-//добавление новой карточки через попап
-function addNewCard () {
-  const newCardDOM = cardTemlate.querySelector('.element').cloneNode(true);
-
-  newCardDOM.querySelector('.element__title').textContent = inputCardAddName.value;
-  newCardDOM.querySelector('.element__image').src = inputCardAddImg.value;
-  newCardDOM.querySelector('.element__image').alt = inputCardAddName.value;
-  addLike(newCardDOM);
-  deleteCard(newCardDOM);
-  return newCardDOM;
-}
-
-//рендер на страницу новой карточки
-function addNewCardToDOM (evt) {
-  evt.preventDefault();
-  const renderCard = addNewCard();
-  cardsContainer.prepend(renderCard);
-  closePopup(popupCard);
-}
-addCardToDOM();
-
 //Лайки
-function addLike (e) {
-  const likeBtn = e.querySelector('.element__like');
+function addLike (card) {
+  const likeBtn = card.querySelector('.element__like');
   likeBtn.addEventListener('click', (e) => {
     e.target.classList.toggle('element__like_active');
   });
 }
 
 //Удаление карточек
-function deleteCard (e) {
-  const removeCard = e.querySelector('.element__delete');
+function deleteCard (card) {
+  const removeCard = card.querySelector('.element__delete');
   removeCard.addEventListener('click', (e) => {
     e.target.closest('.element').remove();
   });
 }
 
 //открытие попапа картинки
-function showBiggestImage () {
-  const allImage = document.querySelectorAll('.element__image');
-  allImage.forEach(function(e) {
-    e.addEventListener('click', () => {
-      popupImage.src = e.src;
-      popupFigcaption.textContent = e.alt;
-      popupImage.alt = e.alt;
-      openPopup(popupShowImage);
-    });
+function showBiggestImage (elementImage) {
+  elementImage.addEventListener('click', () => {
+    popupImage.src = elementImage.src;
+    popupFigcaption.textContent = elementImage.alt;
+    popupImage.alt = elementImage.alt;
+    openPopup(popupShowImage);
   });
 }
-showBiggestImage();
-//закрытие попапов с кнопки "закрыть"
-function closePopupBtn () {
-  const closeBtn = document.querySelectorAll('.popup__close');
+const closeBtn = document.querySelectorAll('.popup__close'); //поиск кнопок закрытия
+// закрытие попапов с кнопки "закрыть"
+function setClosePopupListeners () {
+  closeBtn.forEach(function(btn) {
+    btn.addEventListener('click', (e) => closePopup(e.target.closest('.popup')));
+  });
+}
+setClosePopupListeners();
 
-  closeBtn.forEach(function(e) {
-    e.addEventListener('click', () => {
-      e.closest('.popup').classList.toggle('popup_opened');
-    });
-  });
-}
-closePopupBtn();
 //Вызовы функций слушателями
 openProfileButton.addEventListener('click', openProfile);// открытие попап профиля
-formProfile.addEventListener('submit', formSubmitHandler);//кнопка закрытия формы
+formProfile.addEventListener('submit', editProfileFormSubmitHandler);//кнопка закрытия формы
 addCardButton.addEventListener('click', () => openPopup(popupCard));// кнопка добавления карточки
-formCard.addEventListener('submit', addNewCardToDOM);
+formCard.addEventListener('submit', addCardFormSubmitHandler);
