@@ -25,8 +25,9 @@ const popupShowImage =document.querySelector('#popup-show-image');//попап �
 const popupImage = document.querySelector('.popup__image');//изображение в попапе
 const popupFigcaption = document.querySelector('.popup__figcaption');//подпись изображения в попапе
 
+const closeBtn = document.querySelectorAll('.popup__close'); //поиск кнопок закрытия
 
- //добаваляю карточки на страницу
+//добаваляю карточки на страницу
 function createCard(element){
   const newCard = cardTemlate.querySelector('.element').cloneNode(true);
   const elementImage = newCard.querySelector('.element__image');
@@ -61,7 +62,6 @@ function addCardFormSubmitHandler (evt) {
   inputCardAddImg.value ='';
   inputCardAddName.value ='';
 }
-
 
 //Эта функция добавляет модификатор открытия попапов
 function openPopup (popup) {
@@ -113,7 +113,7 @@ function showBiggestImage (elementImage) {
     openPopup(popupShowImage);
   });
 }
-const closeBtn = document.querySelectorAll('.popup__close'); //поиск кнопок закрытия
+
 // закрытие попапов с кнопки "закрыть"
 function setClosePopupListeners () {
   closeBtn.forEach(function(btn) {
