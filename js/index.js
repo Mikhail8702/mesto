@@ -117,7 +117,9 @@ function showBiggestImage (elementImage) {
 // закрытие попапов с кнопки "закрыть"
 function setClosePopupListeners () {
   closeBtn.forEach(function(btn) {
-    btn.addEventListener('click', (e) => closePopup(e.target.closest('.popup')));
+    btn.addEventListener('click', (e) =>
+    closePopup(e.target.closest('.popup'), inputCardAddImg.value ='', inputCardAddName.value =''));
+
   });
 }
 setClosePopupListeners();
