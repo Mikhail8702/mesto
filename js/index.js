@@ -54,8 +54,7 @@ renderInitialCards();
 
 
 //рендер на страницу новой карточки
-function addCardFormSubmitHandler (evt) {
-  evt.preventDefault();
+function addCardFormSubmitHandler () {
   const card = createCard({name: inputCardAddName.value, link: inputCardAddImg.value});
   cardsContainer.prepend(card);
   closePopup(popupCard);
@@ -81,8 +80,7 @@ function closePopup(popup) {
 }
 
 //редактирование профиля
-function editProfileFormSubmitHandler (evt) {
-  evt.preventDefault();
+function editProfileFormSubmitHandler () {
   nameProf.textContent = nameInput.value;
   jobDiscr.textContent = jobInput.value;
   closePopup(profileAdd);
