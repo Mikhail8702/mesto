@@ -137,7 +137,6 @@ function setClosePopupListeners () {
   closeBtn.forEach(function(btn) {
     btn.addEventListener('click', (e) =>
     closePopup(e.target.closest('.popup'), inputCardAddImg.value ='', inputCardAddName.value =''));
-
   });
 }
 setClosePopupListeners();

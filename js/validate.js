@@ -38,7 +38,6 @@ const setEventListeners = (formElement, inputSelector, inactiveButtonClass, subm
   setButtonValue(inputList, buttonElement, inactiveButtonClass);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-
      validationForms(formElement, inputElement, inputErrorClass, errorClass);
      setButtonValue(inputList, buttonElement, inactiveButtonClass);
     });
