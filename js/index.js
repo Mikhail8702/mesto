@@ -26,7 +26,7 @@ const popupImage = document.querySelector('.popup__image');//изображен�
 const popupFigcaption = document.querySelector('.popup__figcaption');//подпись изображения в попапе
 
 const closeBtn = document.querySelectorAll('.popup__close'); //поиск кнопок закрытия
-
+const popupList = document.querySelectorAll('.popup');
 //добаваляю карточки на страницу
 function createCard(element){
   const newCard = cardTemlate.querySelector('.element').cloneNode(true);
@@ -62,9 +62,19 @@ function addCardFormSubmitHandler () {
   inputCardAddName.value ='';
 }
 
-//Эта функция добавляет модификатор открытия попапов
+//проверка кнопки Esc
+const checkKeyCode = (evt) => {
+  const openPopup = document.querySelector('.popup_opened');
+  if (evt.key === "Escape") {
+    closePopup(openPopup);
+  }
+};
+
+//Эта функция открытия попапа
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', checkKeyCode);
+
 }
 
 //открывает попап профиля
@@ -77,8 +87,18 @@ function openProfile() {
 //Функция закрытия попап
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', checkKeyCode);
 }
 
+//закрытие попапа кликом на оверлэй
+function hidePopupOverlayClick () {
+  popupList.forEach(function(popup) {
+    popup.addEventListener('click', (evt) => {
+    closePopup(evt.target);
+  });
+ });
+}
+hidePopupOverlayClick();
 //редактирование профиля
 function editProfileFormSubmitHandler () {
   nameProf.textContent = nameInput.value;
