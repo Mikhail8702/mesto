@@ -49,11 +49,11 @@
       <form class="popup__form" name="popup-add-profile" id="form-profile" novalidate>
         <label class="popup__label">
           <input type="text" class="popup__input" name="profile-input-name" id="popup-profile-input-id" value="" placeholder="Введите имя" minlength="2" maxlength="40" required>
-          <span class="popup__error popup-profile-input-id-error"></span>
+          <span class="popup__error" id="popup-profile-input-id-error"></span>
         </label>
         <label class="popup__label">
           <input type="text" class="popup__input" name="job-input-name" id="popup-job-input-id" value="" placeholder="Напишите о себе" minlength="2" maxlength="200" required>
-          <span class="popup__error popup-job-input-id-error"></span>
+          <span class="popup__error" id="popup-job-input-id-error"></span>
         </label>
         <button type="submit" class="popup__btn" id="save-button-profile">Сохранить</button>
       </form>
@@ -67,11 +67,11 @@
       <form class="popup__form" name="popup-add-card" id="form-card" novalidate>
         <label class="popup__label">
           <input type="text" class="popup__input" name="input-card-add-name" id="input-card-name-add" value="" placeholder="Название места" minlength="2" maxlength="30" required>
-          <span class="popup__error input-card-name-add-error"></span>
+          <span class="popup__error" id="input-card-name-add-error"></span>
         </label>
         <label class="popup__label">
           <input type="url" class="popup__input" name="input-card-add-link" id="input-card-img-link" value="" placeholder="Вставьте ссылку на картинку" required>
-          <span class="popup__error input-card-img-link-error"></span>
+          <span class="popup__error" id="input-card-img-link-error"></span>
         </label>
         <button type="submit" class="popup__btn" id="save-button-add-card">Создать</button>
       </form>
