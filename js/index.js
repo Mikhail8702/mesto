@@ -25,8 +25,8 @@ const popupShowImage =document.querySelector('#popup-show-image');//попап �
 const popupImage = document.querySelector('.popup__image');//изображение в попапе
 const popupFigcaption = document.querySelector('.popup__figcaption');//подпись изображения в попапе
 
-const closeBtn = document.querySelectorAll('.popup__close'); //поиск кнопок закрытия
 const popupList = document.querySelectorAll('.popup');
+
 //добаваляю карточки на страницу
 function createCard(element){
   const newCard = cardTemlate.querySelector('.element').cloneNode(true);
@@ -52,14 +52,24 @@ function renderInitialCards () {
 }
 renderInitialCards();
 
-
 //рендер на страницу новой карточки
 function addCardFormSubmitHandler () {
   const card = createCard({name: inputCardAddName.value, link: inputCardAddImg.value});
   cardsContainer.prepend(card);
   closePopup(popupCard);
-  inputCardAddImg.value ='';
-  inputCardAddName.value ='';
+  setClassBtn(popupCard);
+  setAttributeBtn(popupCard);
+  formCard.reset();
+}
+
+//функция заносит класс деактивации кнопки "сохранить" в попапе
+function setClassBtn() {
+  savePopupCard.classList.add('popup__btn_disabled');
+}
+
+//функция добавляет атрибут деактивации кнопки "сохранить" в попапе
+function setAttributeBtn() {
+  savePopupCard.setAttribute('disabled', true);
 }
 
 //проверка кнопки Esc
@@ -90,15 +100,18 @@ function closePopup(popup) {
   document.removeEventListener('keydown', checkKeyCode);
 }
 
-//закрытие попапа кликом на оверлэй
-function hidePopupOverlayClick () {
+//функция закрытия по "крестику" и оверлэю
+function hidePoup() {
   popupList.forEach(function(popup) {
     popup.addEventListener('click', (evt) => {
-    closePopup(evt.target);
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+      closePopup(popup);
+    }
+    });
   });
- });
 }
-hidePopupOverlayClick();
+hidePoup();
+
 //редактирование профиля
 function editProfileFormSubmitHandler () {
   nameProf.textContent = nameInput.value;
@@ -131,15 +144,6 @@ function showBiggestImage (elementImage) {
     openPopup(popupShowImage);
   });
 }
-
-// закрытие попапов с кнопки "закрыть"
-function setClosePopupListeners () {
-  closeBtn.forEach(function(btn) {
-    btn.addEventListener('click', (e) =>
-    closePopup(e.target.closest('.popup'), inputCardAddImg.value ='', inputCardAddName.value =''));
-  });
-}
-setClosePopupListeners();
 
 //Вызовы функций слушателями
 openProfileButton.addEventListener('click', openProfile);// открытие попап профиля

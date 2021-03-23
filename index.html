@@ -24,12 +24,12 @@
             <div>
               <div class="profile__wrapper">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
-                <button type="button" class="profile__add"></button>
+                <button type="button" class="profile__add pointer"></button>
               </div>
               <p class="profile__discription">Исследователь океана</p>
             </div>
           </div>
-          <button type="button" class="profile__add-btn"></button>
+          <button type="button" class="profile__add-btn pointer"></button>
         </section>
 
         <section class="elements">
@@ -55,9 +55,9 @@
           <input type="text" class="popup__input" name="job-input-name" id="popup-job-input-id" value="" placeholder="Напишите о себе" minlength="2" maxlength="200" required>
           <span class="popup__error" id="popup-job-input-id-error"></span>
         </label>
-        <button type="submit" class="popup__btn" id="save-button-profile">Сохранить</button>
+        <button type="submit" class="popup__btn pointer" id="save-button-profile">Сохранить</button>
       </form>
-      <button type="button" class="popup__close"></button>
+      <button type="button" class="popup__close pointer"></button>
     </div>
   </div>
 
@@ -73,9 +73,9 @@
           <input type="url" class="popup__input" name="input-card-add-link" id="input-card-img-link" value="" placeholder="Вставьте ссылку на картинку" required>
           <span class="popup__error" id="input-card-img-link-error"></span>
         </label>
-        <button type="submit" class="popup__btn" id="save-button-add-card">Создать</button>
+        <button type="submit" class="popup__btn pointer" id="save-button-add-card">Создать</button>
       </form>
-      <button type="button" class="popup__close"></button>
+      <button type="button" class="popup__close pointer"></button>
     </div>
   </div>
 
@@ -85,17 +85,17 @@
         <img class="popup__image" src="#" alt="#">
         <figcaption class="popup__figcaption"></figcaption>
       </figure>
-      <button type="button" class="popup__close"></button>
+      <button type="button" class="popup__close pointer"></button>
     </div>
   </div>
 
   <template id="element-card">
     <article class="element">
-      <button type="button" class="element__delete"></button>
-      <img class="element__image" src="#" alt="#">
+      <button type="button" class="element__delete pointer"></button>
+      <img class="element__image pointer" src="#" alt="#">
       <div class="element__info">
         <h3 class="element__title"></h3>
-        <button type="button" class="element__like"></button>
+        <button type="button" class="element__like pointer"></button>
       </div>
     </article>
   </template>
