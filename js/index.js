@@ -116,13 +116,18 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', checkKeyCode);
 }
-
+// проверка наличия формы в попап
+function checkForm (popup) {
+  if (popup.querySelector('.popup__form')) {
+    popup.querySelector('.popup__form').reset();
+  }
+}
 //функция закрытия по "крестику" и оверлэю
 function hidePoup() {
   popupList.forEach(function(popup) {
     popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-      popup.querySelector('.popup__form').reset();
+      checkForm(popup);
       closePopup(popup);
       deleteError(popup);
     }
