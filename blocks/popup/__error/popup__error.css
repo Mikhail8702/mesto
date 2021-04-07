@@ -1,4 +1,7 @@
 .popup__error {
+  position: absolute;
+  top: 147px;
+  left: 37px;
   visibility: hidden;
   font-size: 12px;
   line-height: 15px;

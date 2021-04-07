@@ -53,5 +53,6 @@
 @import url(../blocks/popup/__error/popup__error.css);
 @import url(../blocks/popup/__error/_visible/popup__error_visible.css);
 @import url(../blocks/popup/__label/popup__label.css);
+@import url(../blocks/popup/__error/_sequence_two/popup__error_sequence_two.css);
 
 @import url(../blocks/pointer/pointer.css); /*класс для микса курсора*/
