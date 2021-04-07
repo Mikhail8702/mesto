@@ -4,7 +4,6 @@ import {FormValidator} from './FormValidator.js';
 const cardsContainer = document.querySelector('.elements');
 const profileAdd = document.querySelector('#popup-add-profile');//поиск значения попап окна
 const openProfileButton = document.querySelector('.profile__add');//кнопка редактирования профиля
-// const closeButton = document.querySelector('.popup__close');//кнопка закрытия профиля
 const nameProf = document.querySelector('.profile__name');//поиск тайтла страницы
 const jobDiscr = document.querySelector('.profile__discription');//поиск "професси"
 const nameInput = document.querySelector('#popup-profile-input-id');//значение 1го инпута
@@ -18,11 +17,6 @@ const inputCardAddName = document.querySelector('#input-card-name-add'); //ин�
 const inputCardAddImg = document.querySelector('#input-card-img-link'); //инпут попапа добавления карточки 2
 const savePopupCard = document.querySelector('#save-button-add-card');//кнопка "сохранить"
 const formCard = document.querySelector('#form-card');
-
-//попап картинки
-// const popupShowImage =document.querySelector('#popup-show-image');//попап с картинками
-// const popupImage = document.querySelector('.popup__image');//изображение в попапе
-// const popupFigcaption = document.querySelector('.popup__figcaption');//подпись изображения в попапе
 
 const popupList = document.querySelectorAll('.popup');
 const formList = document.querySelectorAll('.popup__form');
@@ -108,7 +102,6 @@ const checkKeyCode = (evt) => {
 function openPopup (popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', checkKeyCode);
-
 }
 
 //открывает попап профиля
@@ -129,6 +122,7 @@ function hidePoup() {
   popupList.forEach(function(popup) {
     popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+      popup.querySelector('.popup__form').reset();
       closePopup(popup);
       deleteError(popup);
     }

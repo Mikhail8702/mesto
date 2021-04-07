@@ -16,7 +16,6 @@ export class Card {
   }
 
   generateCard() {
-
     this._element = this._getTemplate();
     this._setEventListenersLikeBtn();
     this._setEventListenersDeleteBtn();
