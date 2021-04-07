@@ -21,7 +21,6 @@ export class Card {
     this._setEventListenersDeleteBtn();
     this._setEventListenersShowImage();
 
-
     this._element.querySelector('.element__image').src = this._image;
     this._element.querySelector('.element__image').alt = this._text;
     this._element.querySelector('.element__title').textContent = this._text;
