@@ -1,5 +1,6 @@
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
+import {initialCards} from './initial-cards.js';
 
 const cardsContainer = document.querySelector('.elements');
 const profileAdd = document.querySelector('#popup-add-profile');//поиск значения попап окна
@@ -19,74 +20,43 @@ const savePopupCard = document.querySelector('#save-button-add-card');//кноп
 const formCard = document.querySelector('#form-card');
 
 const popupList = document.querySelectorAll('.popup');
-const formList = document.querySelectorAll('.popup__form');
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-const formObject = {
+const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__btn',
   inactiveButtonClass: 'popup__btn_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
+  errorClass: 'popup__error_visible',
+  inputError: '.popup__error'
 };
 
+const editProfileFormValidator = new FormValidator(validationConfig, formProfile);
+const addCardFormValidator = new FormValidator(validationConfig, formCard);
 
 initialCards.forEach((item) => {
-  const card = new Card(item, '#element-card', openPopup);
-  const cardElement = card.generateCard();
-  cardsContainer.append(cardElement);
+  createCard(item);
 });
 
-formList.forEach((forms) => {
-  new FormValidator(formObject, forms).enableValidation();
-});
+
+function createCard(item) {
+  const card = new Card(item, '#element-card', openPopup);
+  const cardElement = card.generateCard();
+  cardsContainer.prepend(cardElement);
+}
 
 //рендер на страницу новой карточки
 function addCardFormSubmitHandler (evt) {
   evt.preventDefault();
-  const card = new Card({name: inputCardAddName.value, link: inputCardAddImg.value}, '#element-card', openPopup);
-  const cardElement = card.generateCard();
-  cardsContainer.prepend(cardElement);
+  createCard({name: inputCardAddName.value, link: inputCardAddImg.value});
   closePopup(popupCard);
-  setClassBtn(popupCard);
-  setAttributeBtn(popupCard);
+  setDisabledBtn(popupCard);
   formCard.reset();
 }
 
 //функция заносит класс деактивации кнопки "сохранить" в попапе
-function setClassBtn() {
+function setDisabledBtn() {
   savePopupCard.classList.add('popup__btn_disabled');
-}
-
-//функция добавляет атрибут деактивации кнопки "сохранить" в попапе
-function setAttributeBtn() {
   savePopupCard.setAttribute('disabled', true);
 }
 
@@ -108,7 +78,17 @@ function openPopup (popup) {
 function openProfile() {
   nameInput.value = nameProf.textContent;
   jobInput.value = jobDiscr.textContent;
+  editProfileFormValidator.enableValidation();
+  editProfileFormValidator.deleteError();
   openPopup(profileAdd);
+}
+
+//открытие попапа создания карточки
+function openCardPopup() {
+  formCard.reset();
+  addCardFormValidator.enableValidation();
+  addCardFormValidator.deleteError();
+  openPopup(popupCard);
 }
 
 //Функция закрытия попап
@@ -116,37 +96,18 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', checkKeyCode);
 }
-// проверка наличия формы в попап
-function checkForm (popup) {
-  if (popup.querySelector('.popup__form')) {
-    popup.querySelector('.popup__form').reset();
-  }
-}
+
 //функция закрытия по "крестику" и оверлэю
 function hidePoup() {
   popupList.forEach(function(popup) {
     popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-      checkForm(popup);
       closePopup(popup);
-      deleteError(popup);
     }
     });
   });
 }
 hidePoup();
-
-//функция убирает очищает поля инутов от ошибок
-function deleteError(popup) {
-  const inputList = popup.querySelectorAll('.popup__input');
-  const inputError = popup.querySelectorAll('.popup__error');
-  inputList.forEach((input) => {
-    input.classList.remove('popup__input_type_error');
-  });
-  inputError.forEach((error) => {
-    error.classList.remove('popup__error_visible');
-  });
-}
 
 //редактирование профиля
 function editProfileFormSubmitHandler (evt) {
@@ -159,5 +120,5 @@ function editProfileFormSubmitHandler (evt) {
 //Вызовы функций слушателями
 openProfileButton.addEventListener('click', openProfile);// открытие попап профиля
 formProfile.addEventListener('submit', editProfileFormSubmitHandler);//кнопка закрытия формы
-addCardButton.addEventListener('click', () => openPopup(popupCard));// кнопка добавления карточки
+addCardButton.addEventListener('click', openCardPopup);// кнопка добавления карточки
 formCard.addEventListener('submit', addCardFormSubmitHandler);
