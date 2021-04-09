@@ -17,7 +17,9 @@ const addCardButton = document.querySelector('.profile__add-btn'); //кнопк�
 const inputCardAddName = document.querySelector('#input-card-name-add'); //инпут попапа добавления карточки 1
 const inputCardAddImg = document.querySelector('#input-card-img-link'); //инпут попапа добавления карточки 2
 const savePopupCard = document.querySelector('#save-button-add-card');//кнопка "сохранить"
-const formCard = document.querySelector('#form-card');
+const formCard = document.querySelector('#form-card');//поиск формы попапа создания карточки
+const popupList = document.querySelectorAll('.popup');// поиск всех попапов
+const elementTemplate = '#element-card';
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -34,20 +36,22 @@ const addCardFormValidator = new FormValidator(validationConfig, formCard);
 
 // рендер карточек на страницу
 initialCards.forEach((item) => {
-  createCard(item);
+  const newCard = createCard(item);
+  cardsContainer.prepend(newCard);
 });
 
 //функция создания карточек
 function createCard(item) {
-  const card = new Card(item, '#element-card', openPopup);
+  const card = new Card(item, elementTemplate, openPopup);
   const cardElement = card.generateCard();
-  cardsContainer.prepend(cardElement);
+  return cardElement;
 }
 
 //рендер на страницу новой карточки
 function addCardFormSubmitHandler (evt) {
   evt.preventDefault();
-  createCard({name: inputCardAddName.value, link: inputCardAddImg.value});
+  const newCard = createCard({name: inputCardAddName.value, link: inputCardAddImg.value});
+  cardsContainer.prepend(newCard);
   closePopup(popupCard);
   setDisabledBtn(popupCard);
   formCard.reset();
@@ -71,7 +75,6 @@ const checkKeyCode = (evt) => {
 function openPopup (popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', checkKeyCode);
-  hidePoup(popup);
 }
 
 //открывает попап профиля
@@ -98,13 +101,13 @@ function closePopup(popup) {
 }
 
 //функция закрытия по "крестику" и оверлэю
-function hidePoup(popup) {
-    popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+popupList.forEach(function(popup) {
+  popup.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
       closePopup(popup);
     }
-    });
-}
+  });
+});
 
 //редактирование профиля
 function editProfileFormSubmitHandler (evt) {
