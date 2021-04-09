@@ -19,8 +19,6 @@ const inputCardAddImg = document.querySelector('#input-card-img-link'); //инп
 const savePopupCard = document.querySelector('#save-button-add-card');//кнопка "сохранить"
 const formCard = document.querySelector('#form-card');
 
-const popupList = document.querySelectorAll('.popup');
-
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -30,15 +28,16 @@ const validationConfig = {
   errorClass: 'popup__error_visible',
   inputError: '.popup__error'
 };
-
+//создание экземляров класса
 const editProfileFormValidator = new FormValidator(validationConfig, formProfile);
 const addCardFormValidator = new FormValidator(validationConfig, formCard);
 
+// рендер карточек на страницу
 initialCards.forEach((item) => {
   createCard(item);
 });
 
-
+//функция создания карточек
 function createCard(item) {
   const card = new Card(item, '#element-card', openPopup);
   const cardElement = card.generateCard();
@@ -72,6 +71,7 @@ const checkKeyCode = (evt) => {
 function openPopup (popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', checkKeyCode);
+  hidePoup(popup);
 }
 
 //открывает попап профиля
@@ -98,16 +98,13 @@ function closePopup(popup) {
 }
 
 //функция закрытия по "крестику" и оверлэю
-function hidePoup() {
-  popupList.forEach(function(popup) {
+function hidePoup(popup) {
     popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
       closePopup(popup);
     }
     });
-  });
 }
-hidePoup();
 
 //редактирование профиля
 function editProfileFormSubmitHandler (evt) {
