@@ -1,9 +1,10 @@
 import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {initialCards} from '../utils/initial-cards.js';
+import {setDisabledBtn} from '../utils/utils.js';
 import {cardsContainer, profileAdd, openProfileButton, nameProf, jobDiscr, nameInput,
-  jobInput, formProfile, popupCard, addCardButton, savePopupCard, formCard, elementTemplate, validationConfig,
-  popupImage} from '../utils/constants.js';
+  jobInput, formProfile, popupCard, addCardButton, formCard, elementTemplate, validationConfig,
+  popupImage, popupList} from '../utils/constants.js';
 
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -22,6 +23,11 @@ const popupImageAdd = new PopupWithImage(popupImage);
 //Экземпляр класса UserInfo
 const userInfoClass = new UserInfo({nameProf, jobDiscr});
 
+
+export function handleOnClick(card) {
+  popupImageAdd.open(card);
+}
+
 //экземпляр класса Section (рендер карточек на страницу)
 const cardsList = new Section({
   items: initialCards,
@@ -36,20 +42,14 @@ cardsContainer
 //рендер карточек на страницу
 cardsList.rendererItem();
 
-
-function handleOnClick(card) {
-  popupImageAdd.open(card);
-  popupImageAdd.setEventListeners();
+//рендер на страницу новой карточки
+function addCardFormSubmitHandler (data) {
+  const newCard = new Card({name: data['input-card-add-name'], link: data['input-card-add-link']}, elementTemplate, handleOnClick);
+  const cardElement = newCard.generateCard();
+  cardsContainer.prepend(cardElement);
+  popupCardAdd.close();
+  setDisabledBtn(popupCard);
 }
-
-
-//функция заносит класс деактивации кнопки "сохранить" в попапе
-function setDisabledBtn() {
-  savePopupCard.classList.add('popup__btn_disabled');
-  savePopupCard.setAttribute('disabled', true);
-}
-
-
 
 //открывает попап профиля
 openProfileButton.addEventListener('click', () =>{
@@ -59,9 +59,7 @@ openProfileButton.addEventListener('click', () =>{
   editProfileFormValidator.enableValidation();
   editProfileFormValidator.deleteError();
   popupProfileAdd.open();
-  popupProfileAdd.setEventListeners();
 });
-
 
 //открытие попапа создания карточки
 addCardButton.addEventListener('click', () => {
@@ -69,9 +67,7 @@ addCardButton.addEventListener('click', () => {
   addCardFormValidator.enableValidation();
   addCardFormValidator.deleteError();
   popupCardAdd.open();
-  popupCardAdd.setEventListeners();
 });
-
 
 //редактирование профиля
 function editProfileFormSubmitHandler (data) {
@@ -80,11 +76,8 @@ function editProfileFormSubmitHandler (data) {
 }
 
 
-//рендер на страницу новой карточки
-function addCardFormSubmitHandler (data) {
-  const newCard = new Card({name: data['input-card-add-name'], link: data['input-card-add-link']}, elementTemplate, handleOnClick);
-  const cardElement = newCard.generateCard();
-  cardsList.addItem(cardElement);
-  popupCardAdd.close();
-  setDisabledBtn(popupCard);
-}
+
+//слушатель закрытия поапа на крестики овкрлей
+popupProfileAdd.setEventListeners();
+popupCardAdd.setEventListeners();
+popupImageAdd.setEventListeners();

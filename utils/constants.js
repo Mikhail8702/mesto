@@ -26,5 +26,5 @@ export const validationConfig = {
   errorClass: 'popup__error_visible',
   inputError: '.popup__error'
 };
-
+export const popupList = document.querySelectorAll('.popup');
 export const popupImage = document.querySelector('#popup-show-image');
