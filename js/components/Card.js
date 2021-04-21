@@ -1,16 +1,13 @@
-const imagePopup = document.querySelector('#popup-show-image');
-const popupImageVariable = document.querySelector('.popup__image');
-const popupFigcaptionVariable = document.querySelector('.popup__figcaption');
 
 export class Card {
-
-  constructor (data, template, openPopup) {
-    this._text = data.name;
-    this._image = data.link;
-    this._template = template;
-    this._openPopup = openPopup;
+  constructor (item, elementTemplate, handleCardClick) {
+    this._text = item.name;
+    this._image = item.link;
+    this._template = elementTemplate;
+    this._handleOnClick = handleCardClick;
 
   }
+
   _getTemplate() {
     const cardElement = document
     .querySelector(this._template)
@@ -19,6 +16,7 @@ export class Card {
     .cloneNode(true);
 
     return cardElement;
+
   }
 
   generateCard() {
@@ -36,6 +34,7 @@ export class Card {
   _setEventListeners() {
     this._elementLike = this._element.querySelector('.element__like');
     this._elementDelete = this._element.querySelector('.element__delete');
+    this._elementImage = this._element.querySelector('.element__image');
 
     this._elementLike.addEventListener('click', () => {
       this._elementLike.classList.toggle('element__like_active');
@@ -45,13 +44,7 @@ export class Card {
       this._elementDelete.closest('.element').remove();
     });
 
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-      popupImageVariable.src = this._image;
-      popupImageVariable.alt = this._text;
-      popupFigcaptionVariable.textContent = this._text;
-
-     this._openPopup(imagePopup);
-    });
+    this._elementImage.addEventListener('click', () => this._handleOnClick(this._element));
   }
 
 }
