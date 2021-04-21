@@ -75,8 +75,6 @@ function editProfileFormSubmitHandler (data) {
   popupProfileAdd.close();
 }
 
-
-
 //слушатель закрытия поапа на крестики овкрлей
 popupProfileAdd.setEventListeners();
 popupCardAdd.setEventListeners();
