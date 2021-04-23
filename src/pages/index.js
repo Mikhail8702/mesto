@@ -2,10 +2,9 @@ import './index.css';
 import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {initialCards} from '../utils/initial-cards.js';
-import {setDisabledBtn} from '../utils/utils.js';
-import {cardsContainer, profileAdd, openProfileButton, nameProf, jobDiscr, nameInput,
-  jobInput, formProfile, popupCard, addCardButton, formCard, elementTemplate, validationConfig,
-  popupImage, popupList} from '../utils/constants.js';
+import {cardsContainer, openProfileButton, nameInput, jobInput, formProfile, popupCard,
+  addCardButton, formCard, elementTemplate, validationConfig, popupProfileSelector, popupCardSelector,
+  popupImageSelector, nameSelector, subSelector} from '../utils/constants.js';
 
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -15,26 +14,32 @@ import { UserInfo } from '../components/UserInfo.js';
 //создание экземляров класса валидаторов
 const editProfileFormValidator = new FormValidator(validationConfig, formProfile);
 const addCardFormValidator = new FormValidator(validationConfig, formCard);
+editProfileFormValidator.enableValidation();
+addCardFormValidator.enableValidation();
 
 //создание экземпляров класса попапов
-const popupProfileAdd = new PopupWithForm(profileAdd, editProfileFormSubmitHandler);
-const popupCardAdd = new PopupWithForm(popupCard, addCardFormSubmitHandler);
-const popupImageAdd = new PopupWithImage(popupImage);
+const popupProfileAdd = new PopupWithForm(popupProfileSelector, editProfileFormSubmitHandler);
+const popupCardAdd = new PopupWithForm(popupCardSelector, addCardFormSubmitHandler);
+const popupImageAdd = new PopupWithImage(popupImageSelector);
 
 //Экземпляр класса UserInfo
-const userInfoClass = new UserInfo({nameProf, jobDiscr});
+const userInfoClass = new UserInfo(nameSelector, subSelector);
 
 
-export function handleOnClick(card) {
-  popupImageAdd.open(card);
+export function handleOnClick(cardText, cardImage) {
+  popupImageAdd.open(cardText, cardImage);
+}
+
+function createCard(item) {
+  const card = new Card(item, elementTemplate, handleOnClick);
+  return card.generateCard();
 }
 
 //экземпляр класса Section (рендер карточек на страницу)
 const cardsList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const newCard = new Card(item, elementTemplate, handleOnClick);
-    const cardElement = newCard.generateCard();
+    const cardElement = createCard(item);
     cardsList.addItem(cardElement);
   },
 },
@@ -45,11 +50,9 @@ cardsList.rendererItem();
 
 //рендер на страницу новой карточки
 function addCardFormSubmitHandler (data) {
-  const newCard = new Card({name: data['input-card-add-name'], link: data['input-card-add-link']}, elementTemplate, handleOnClick);
-  const cardElement = newCard.generateCard();
+  const cardElement = createCard({name: data['input-card-add-name'], link: data['input-card-add-link']});
   cardsContainer.prepend(cardElement);
   popupCardAdd.close();
-  setDisabledBtn(popupCard);
 }
 
 //открывает попап профиля
@@ -57,7 +60,6 @@ openProfileButton.addEventListener('click', () =>{
   const userInfoBox = userInfoClass.getUserInfo();
   nameInput.value = userInfoBox.userName;
   jobInput.value = userInfoBox.userInfo;
-  editProfileFormValidator.enableValidation();
   editProfileFormValidator.deleteError();
   popupProfileAdd.open();
 });
@@ -65,7 +67,6 @@ openProfileButton.addEventListener('click', () =>{
 //открытие попапа создания карточки
 addCardButton.addEventListener('click', () => {
   formCard.reset();
-  addCardFormValidator.enableValidation();
   addCardFormValidator.deleteError();
   popupCardAdd.open();
 });

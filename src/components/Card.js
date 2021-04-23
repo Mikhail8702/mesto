@@ -44,7 +44,7 @@ export class Card {
       this._elementDelete.closest('.element').remove();
     });
 
-    this._elementImage.addEventListener('click', () => this._handleOnClick(this._element));
+    this._elementImage.addEventListener('click', () => this._handleOnClick(this._text, this._image));
   }
 
 }

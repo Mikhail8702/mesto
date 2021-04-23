@@ -17,6 +17,15 @@ export const savePopupCard = document.querySelector('#save-button-add-card');//�
 export const formCard = document.querySelector('#form-card');//поиск формы попапа создания карточки
 export const elementTemplate = '#element-card';
 
+//селекторы попапов
+export const popupProfileSelector = '#popup-add-profile';
+export const popupCardSelector = '#popup-add-card';
+export const popupImageSelector = '#popup-show-image';
+
+//селекторы для userInfo
+export const nameSelector = '.profile__name';
+export const subSelector = '.profile__discription';
+
 export const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
