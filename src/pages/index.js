@@ -2,7 +2,7 @@ import './index.css';
 import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {initialCards} from '../utils/initial-cards.js';
-import {cardsContainer, openProfileButton, nameInput, jobInput, formProfile, popupCard,
+import {cardsContainer, openProfileButton, nameInput, jobInput, formProfile,
   addCardButton, formCard, elementTemplate, validationConfig, popupProfileSelector, popupCardSelector,
   popupImageSelector, nameSelector, subSelector} from '../utils/constants.js';
 
