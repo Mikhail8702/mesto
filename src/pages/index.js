@@ -56,7 +56,7 @@ function addCardFormSubmitHandler (data) {
 }
 
 //открывает попап профиля
-openProfileButton.addEventListener('click', () =>{
+openProfileButton.addEventListener('click', () => {
   const userInfoBox = userInfoClass.getUserInfo();
   nameInput.value = userInfoBox.userName;
   jobInput.value = userInfoBox.userInfo;
@@ -68,6 +68,7 @@ openProfileButton.addEventListener('click', () =>{
 addCardButton.addEventListener('click', () => {
   formCard.reset();
   addCardFormValidator.deleteError();
+  addCardFormValidator.disableSubmitButton();
   popupCardAdd.open();
 });
 

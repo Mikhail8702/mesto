@@ -38,32 +38,29 @@ export  class FormValidator {
     });
   }
 
-  _hasInvalidInput (inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput () {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
-  _setButtonValue (inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
-      buttonElement.setAttribute('disabled', true);
+  _setButtonValue () {
+    if (this._hasInvalidInput(this._inputList)) {
       this.disableSubmitButton();
     } else {
-      buttonElement.classList.remove(this._validationConfig.inactiveButtonClass);
-      buttonElement.removeAttribute('disabled');
+      this._buttonElement.classList.remove(this._validationConfig.inactiveButtonClass);
+      this._buttonElement.removeAttribute('disabled');
 
     }
   }
 
   deleteError() {
-    const inputList = this._formList.querySelectorAll(this._validationConfig.inputSelector);
-    inputList.forEach(input => this._hideInputError(input));
+    this._inputList.forEach(input => this._hideInputError(input));
   }
 
   disableSubmitButton() {
     this._buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
-    this._buttonElement.disbaled = true;
+    this._buttonElement.setAttribute('disabled', true);
   }
 
   enableValidation () {
