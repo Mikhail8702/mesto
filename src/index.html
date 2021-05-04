@@ -19,7 +19,9 @@
       <main>
         <section class="profile margin-profile">
           <div class="profile__info">
-            <img src="<%=require('./images/avatar.jpg')%>" alt="аватар" class="profile__avatar">
+            <div class="profile__avatar">
+              <button type="button" class="profile__avatar-overlay"></button>
+            </div>
             <div>
               <div class="profile__wrapper">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -88,13 +90,38 @@
     </div>
   </div>
 
+  <div class="popup" id="popup-delete-card">
+    <div class="popup__container popup__container_delete_card">
+      <h3 class="popup__title popup__title_delete_card">Вы уверены?</h3>
+      <button type="button" class="popup__btn pointer" id="save-button-delete-card">Да</button>
+      <button type="button" class="popup__close pointer"></button>
+    </div>
+  </div>
+
+  <div class="popup" id="popup-add-profile-avatar">
+    <div class="popup__container">
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form class="popup__form" name="popup-add-avatar-profile" id="form-avatar" novalidate>
+        <label class="popup__label">
+          <input type="url" class="popup__input" name="input-avatar-link" id="input-add-avatar-link" value="" placeholder="Вставьте ссылку на картинку" required>
+          <span class="popup__error" id="input-add-avatar-link-error"></span>
+        </label>
+        <button type="submit" class="popup__btn pointer" id="save-button-add-avatar">Сохранить</button>
+      </form>
+      <button type="button" class="popup__close pointer"></button>
+    </div>
+  </div>
+
   <template id="element-card">
     <article class="element">
       <button type="button" class="element__delete pointer"></button>
       <img class="element__image pointer" src="#" alt="#">
       <div class="element__info">
         <h3 class="element__title"></h3>
-        <button type="button" class="element__like pointer"></button>
+        <div class="element__like-box">
+          <button type="button" class="element__like pointer"></button>
+          <span class="element__like-quant"></span>
+        </div>
       </div>
     </article>
   </template>
