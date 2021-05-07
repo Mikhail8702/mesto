@@ -98,13 +98,13 @@ function createCard(item, userId) {
       const userIdCard = data.owner._id;
       const newCard = createCard(data, userIdCard);
       cardsList.addItem(newCard);
+      popupCardAdd.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
       renderLoading(false, button, buttonText);
-      popupCardAdd.close();
     });
 
   }
@@ -167,13 +167,13 @@ function editProfileFormSubmitHandler (data, button, buttonText) {
   const userData = api.editProfileData(data);
   userData.then((data) => {
     userInfoClass.setUserInfo(data);
+    popupProfileAdd.close();
   })
   .catch((err) => {
     console.log(err);
   })
   .finally(() => {
     renderLoading(false, button, buttonText);
-    popupProfileAdd.close();
   });
 
 }
@@ -183,13 +183,13 @@ function editAvatarProfileFormHandler(data, button, buttonText) {
   const avaData = api.editProfileAva(data);
   avaData.then((data) => {
     userInfoClass.setUserInfo(data);
+    popupAvaAdd.close();
   })
   .catch((err) => {
     console.log(err);
   })
   .finally(() => {
     renderLoading(false, button, buttonText);
-    popupAvaAdd.close();
   });
 }
 
