@@ -3,7 +3,7 @@ import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {cardsContainer, openProfileButton, nameInput, jobInput, formProfile,
   addCardButton, formCard, elementTemplate, validationConfig, popupProfileSelector, popupCardSelector,
-  popupImageSelector, nameSelector, subSelector, profileName, userInfo, profileAvatar, popupWithSubmitSelector,
+  popupImageSelector, nameSelector, subSelector, avatarSelector, popupWithSubmitSelector,
   profileAvatarBtn, formAva, popupEditAvaSelector} from '../utils/constants.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -30,7 +30,7 @@ const popupImageAdd = new PopupWithImage(popupImageSelector);
 const popupWithSubmit = new PopupWithSubmit(popupWithSubmitSelector);
 
 //Экземпляр класса UserInfo
-const userInfoClass = new UserInfo(nameSelector, subSelector);
+const userInfoClass = new UserInfo(nameSelector, subSelector, avatarSelector);
 
 //создание экземпляра класса API
 const api = new Api({
@@ -67,7 +67,7 @@ function handleDeleteClick (id, card) {
 function addLikes(id, card) {
   const likes = api.addLike(id);
   likes.then(res => {
-    card.querySelector('.element__like-quant').textContent = res.likes.length;
+    card.updateLike(res.likes.length);
   })
   .catch((err) => {
     console.log(err);
@@ -78,7 +78,7 @@ function addLikes(id, card) {
 function removeLike (id, card) {
   const likes = api.removeLike(id);
   likes.then(res => {
-    card.querySelector('.element__like-quant').textContent = res.likes.length;
+    card.updateLike(res.likes.length);
   })
   .catch((err) => {
     console.log(err);
@@ -97,38 +97,37 @@ function createCard(item, userId) {
     cardElement.then((data) => {
       const userIdCard = data.owner._id;
       const newCard = createCard(data, userIdCard);
-      cardsContainer.prepend(newCard);
+      cardsList.addItem(newCard);
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
       renderLoading(false, button, buttonText);
+      popupCardAdd.close();
     });
-    popupCardAdd.close();
+
   }
+
+//экземпляр класса Section рендеринг карточек
+  const cardsList = new Section(
+    (item, userId) => {
+      const cardElement = createCard(item, userId);
+      cardsList.addItem(cardElement);
+    },
+    cardsContainer
+  );
 
 //получение данных пользователя
   const apiProfile = api.getUserInfo();
   apiProfile.then((data) => {
     const userId = data._id;
-    profileName.textContent = data.name;
-    userInfo.textContent = data.about;
-    profileAvatar.style.backgroundImage = `url(${data.avatar})`;
+    userInfoClass.setUserInfo(data);
 
     //рендер карточек
     const basicCards = api.getInitialCards();
     basicCards.then((data) =>{
-    const cardsList = new Section({
-    items: data,
-    renderer: (item) => {
-      const cardElement = createCard(item, userId);
-      cardsList.addItem(cardElement);
-    },
-  },
-    cardsContainer
-  );
-  cardsList.rendererItem(data);
+    cardsList.renderItems(data, userId);
   })
   .catch((err) => {
     console.log(err);
@@ -138,6 +137,7 @@ function createCard(item, userId) {
   .catch((err) => {
     console.log(err);
   });
+
 
 
 //открывает попап профиля
@@ -151,7 +151,6 @@ openProfileButton.addEventListener('click', () => {
 
 //открытие попапа создания карточки
 addCardButton.addEventListener('click', () => {
-  formCard.reset();
   addCardFormValidator.deleteError();
   addCardFormValidator.disableSubmitButton();
   popupCardAdd.open();
@@ -159,7 +158,6 @@ addCardButton.addEventListener('click', () => {
 
 //открывает попап смены аватара
 profileAvatarBtn.addEventListener('click', () =>{
-  formAva.reset();
   popupAvaAdd.open();
   editAvaProfFormValid.disableSubmitButton();
 });
@@ -175,25 +173,24 @@ function editProfileFormSubmitHandler (data, button, buttonText) {
   })
   .finally(() => {
     renderLoading(false, button, buttonText);
-
+    popupProfileAdd.close();
   });
-  popupProfileAdd.close();
+
 }
 
 //добавление аватара
 function editAvatarProfileFormHandler(data, button, buttonText) {
   const avaData = api.editProfileAva(data);
   avaData.then((data) => {
-    profileAvatar.style.backgroundImage = `url(${data.avatar})`;
-
+    userInfoClass.setUserInfo(data);
   })
   .catch((err) => {
     console.log(err);
   })
   .finally(() => {
     renderLoading(false, button, buttonText);
+    popupAvaAdd.close();
   });
-  popupAvaAdd.close();
 }
 
 //функция меняет текст кнопки во время загрузки

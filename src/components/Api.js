@@ -4,17 +4,19 @@ export default class Api {
     this._headers = config.headers;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getUserInfo() {
     return fetch(this._url + 'users/me', {
       method: 'GET',
       headers: this._headers
     })
-    .then((res) => {
-      if (res.ok) {
-      return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(this._checkResponse);
 
   }
 
@@ -23,12 +25,7 @@ export default class Api {
       method: 'GET',
       headers: this._headers
     })
-    .then((res) => {
-      if (res.ok) {
-      return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(this._checkResponse);
 
   }
 
@@ -42,12 +39,7 @@ export default class Api {
 
       })
     })
-    .then((res) => {
-      if (res.ok) {
-      return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
 
   }
 
@@ -61,12 +53,7 @@ export default class Api {
 
       })
     })
-    .then((res) => {
-      if (res.ok) {
-      return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(this._checkResponse);
 
 
   }
@@ -76,12 +63,7 @@ export default class Api {
       method:'DELETE',
       headers: this._headers,
     })
-    .then((res) => {
-      if (res.ok) {
-      return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
 
 
   }
@@ -91,12 +73,7 @@ export default class Api {
       method:'PUT',
       headers: this._headers,
     })
-    .then((res) => {
-      if (res.ok) {
-      return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
 
 
   }
@@ -105,12 +82,7 @@ export default class Api {
       method:'DELETE',
       headers: this._headers,
     })
-    .then((res) => {
-      if (res.ok) {
-      return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
 
   }
 
@@ -124,12 +96,7 @@ export default class Api {
 
       })
     })
-    .then((res) => {
-      if (res.ok) {
-      return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(this._checkResponse);
 
   }
 

@@ -17,9 +17,4 @@ export default class PopupWithSubmit extends Popup {
     });
   }
 
-  close() {
-    super.close();
-
-  }
-
 }

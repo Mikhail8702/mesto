@@ -1,7 +1,6 @@
 
 export class Card {
   constructor (item, userId, elementTemplate, handleCardClick, handleDeleteClick, addLikes, removeLike) {
-
     this._text = item.name;
     this._image = item.link;
     this._owner = item.owner._id;
@@ -49,13 +48,20 @@ export class Card {
     return this._element;
   }
 
+  updateLike(likelength) {
+    this._likeQuant.textContent = likelength;
+  }
+
+  deleteLike(likelength) {
+    this._likeQuant = likelength;
+  }
   _checkUserLike() {
     if (this._elementLike.classList.contains('element__like_active')) {
-      this._removeLike(this._id, this._element);
+      this._removeLike(this._id, this);
       this._elementLike.classList.remove('element__like_active');
     }
     else {
-      this._addLike(this._id, this._element);
+      this._addLike(this._id, this);
       this._elementLike.classList.add('element__like_active');
     }
   }
